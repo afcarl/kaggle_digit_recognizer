@@ -253,8 +253,8 @@ if __name__ == '__main__':
         state = check['state']
 
     # Setting optimizers
-    dopt = optim.Adam(dmdl.parameters(), lr=5e-4, betas=(0.5, 0.999))
-    gopt = optim.Adam(gmdl.parameters(), lr=5e-4, betas=(0.5, 0.999))
+    dopt = optim.Adam(dmdl.parameters(), lr=1e-4, betas=(0.5, 0.999))
+    gopt = optim.Adam(gmdl.parameters(), lr=1e-4, betas=(0.5, 0.999))
 
     # Random vector
     zt = torch.from_numpy(np.arange(batch_sz).reshape((batch_sz, 1)) % 10)
@@ -325,7 +325,7 @@ if __name__ == '__main__':
                 out = gmdl(zt)
                 vutils.save_image(out.data, rslt_path+'fake.png',\
                 normalize=True, nrow=16)
-                print 'E: [{0}][{1}/{2}]\t D: {3:.4f}\t G: {4:.4f}\t'.format(
+                print 'E: [{0:03d}][{1:03d}/{2:03d}]\t D: {3:.4f}\t G: {4:.4f}\t'.format(
                     epoch, i, len(train_load), dlss.data.mean(),
                     glss.data.mean()
                 )
