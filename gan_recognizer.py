@@ -258,8 +258,9 @@ if __name__ == '__main__':
 
     # Random vector
     zt = torch.from_numpy(np.arange(batch_sz).reshape((batch_sz, 1)) % 10)
+    zt = torch.div(torch.add(zt.float(), -4.5), 4.5)
     zr = torch.randn([batch_sz, 100])
-    zt = zr.mul(zt.float().expand_as(zr))
+    zt = zr.add(zt.float().expand_as(zr))
     zt = torch.autograd.Variable(zt.cuda(), volatile=True)
 
     # For each epoch
@@ -286,7 +287,8 @@ if __name__ == '__main__':
             # Generator vector
             zvec = torch.randn([btsz, 100])
             zr = trgs.view(trgs.size(0), 1).float()
-            zvec = zvec.mul(zr.expand_as(zvec))
+            zr = torch.div(torch.add(zr, -4.5), 4.5)
+            zvec = zvec.add(zr.expand_as(zvec))
             zvec = torch.autograd.Variable(zvec.cuda())
 
             # Computing generator images
@@ -304,7 +306,8 @@ if __name__ == '__main__':
             # New generator images
             zvec = torch.randn([btsz, 100])
             zr = trgs.view(trgs.size(0), 1).float()
-            zvec = zvec.mul(zr.expand_as(zvec))
+            zr = torch.div(torch.add(zr, -4.5), 4.5)
+            zvec = zvec.add(zr.expand_as(zvec))
             zvec = torch.autograd.Variable(zvec.cuda())
             gimg = gmdl(zvec)
 
